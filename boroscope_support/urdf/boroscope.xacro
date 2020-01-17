@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+
+<robot name="boroscope" xmlns:xacro="http://wiki.ros.org/xacro">
+    <xacro:include filename="$(find boroscope_support)/urdf/boroscope_macro.xacro"/>
+    <xacro:boroscope prefix="" />
+	<!--parent="base_link">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </xacro:boroscope-->
+</robot>

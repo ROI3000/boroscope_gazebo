@@ -1,0 +1,476 @@
+<?xml version="1.0"?>
+<!--Inertial calculated by ML from visual.stl 
+	Messsystem und Blisk reduced faces -->
+<!--<robot name="boroscope" xmlns:xacro="http://ros.org/wiki/xacro"> -->
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+  <xacro:macro name="boroscope" params="prefix">
+
+   <material name="blue">
+     <color rgba="0 0 0.8 1"/>
+   </material>
+
+   <material name="white">
+     <color rgba="1 1 1 1"/>
+   </material>
+
+   <material name="green">
+     <color rgba="0 0.8 0 1"/>
+   </material>
+
+   <material name="red">
+     <color rgba="1 0 0 1"/>
+   </material>
+
+   <material name="black">
+     <color rgba="0 0 0 1"/>
+   </material>
+
+
+  <!--link name="base_link">
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </link-->
+
+  <link name="base_link">
+    <inertial>
+      <mass value="0.01" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy=" 0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.00001 0.00001 0.00001"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+    </collision>
+  </link>
+
+  <joint name="base_fixed" type="fixed">
+    <parent link="base_link"/>
+    <child link="test_object"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>		
+    <limit effort="0" velocity="0" lower="0" upper="0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <link name="test_object">
+    <inertial>
+     <origin xyz="-0.0000003 -0.0000004 0.0313974" rpy="0 0 0"/>
+     <mass value="1.5"/>
+     <inertia ixx="0.00000451719"  ixy="0.00000000132"  ixz="0.00000000004" iyy="0.00000451874" iyz="0.00000000003" izz="0.00000856920" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/visual/test_object.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/collision/test_object_face.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+    </collision>
+  </link>
+<!--
+Center of Mass is -0.0000003 -0.0000004 0.0313974
+| 0.00000451719 0.00000000132 0.00000000004 |
+| 0.00000000132 0.00000451874 0.00000000003 |
+| 0.00000000004 0.00000000003 0.00000856920 |
+-->
+  <joint name="blisk_rotate" type="continuous">
+    <parent link="test_object"/>
+    <child link="urs150bcc"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 -0.0495" rpy="-${3.14159265359/2} 0 0"/> 		
+    <limit effort="20" velocity="0.1"/>
+    <dynamics damping="0.7" friction="0.0"/>
+  </joint>
+
+  <link name="urs150bcc">
+    <inertial>
+      <mass value="3.4" />
+	<origin xyz="-0.0116940 0.0196918 -0.0000590" rpy="0.0 0.0 0.0"/>
+      <inertia ixx="0.00000172461" ixy="-0.00000000484" ixz="-0.00000022568" iyy="0.00000445441" iyz="0.00000000064" izz="0.00000288061" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/visual/urs150bcc.stl"/>
+      </geometry>
+      <origin xyz="0 -0.015 0" rpy="${3.14159265359} ${3.14159265359} 0"/>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/collision/urs150bcc.stl"/>
+      </geometry>
+      <origin xyz="0 -0.015 0" rpy="${3.14159265359} ${3.14159265359} 0"/>
+    </collision>
+  </link>
+<!--
+Center of Mass is -0.0116940 0.0196918 -0.0000590
+| 0.00000172461 -0.00000000484 -0.00000022568 |
+| -0.00000000484 0.00000445441 0.00000000064 |
+| -0.00000022568 0.00000000064 0.00000288061 |
+-->
+  <joint name="adapter_uts150cc_to_urs150bcc_fix" type="fixed">
+    <parent link="urs150bcc"/>
+    <child link="adapter_uts150cc_to_urs150bcc"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/> 		
+    <limit effort="0" velocity="0" lower="0" upper="0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <link name="adapter_uts150cc_to_urs150bcc">
+    <inertial>
+      <mass value="5" />
+	<origin xyz="0.0 0.0 0.0042625" rpy="0.0 0.0 0.0"/>
+      <inertia ixx="0.00000063040" ixy="0.0" ixz="0.0" iyy="0.00000063040" iyz="0.0" izz="0.00000125320" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/visual/adapter_uts150cc_to_urs150bcc.stl"/>
+      </geometry>
+      <origin xyz="0.0 -0.005 0.0" rpy="1.57 0 0"/>
+      <material name="White"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/collision/adapter_uts150cc_to_urs150bcc.stl"/>
+      </geometry>
+      <origin xyz="0.0 -0.005 0.0" rpy="1.57 0 0"/>
+    </collision>
+  </link>
+<!--
+Center of Mass is 0.0 0.0 0.0042625
+| 0.00000063040 0.0 0.0 |
+| 0.000000 0.00000063040 -0.000000 |
+| 0.000000 -0.000000 0.00000125320 |
+-->
+  <joint name="horizontal_y" type="prismatic">
+    <parent link="adapter_uts150cc_to_urs150bcc"/>
+    <child link="uts150cc"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0.0 0.302 0.0" rpy="1.5707963267948966 0.0 0.0"/> 		
+    <limit effort="10" velocity="0.1" lower="-0.05" upper="0.05"/>
+    <dynamics damping="0.8" friction="0.0"/>
+  </joint>
+
+  <link name="uts150cc">
+    <inertial>
+      <mass value="3.2" />
+	<origin xyz="0.0433911 0.0157576 0.0011992" rpy="0.0 0.0 0.0"/>
+      <inertia ixx="0.00000100727" ixy="-0.00000010964" ixz="-0.00000022481" iyy="0.00001453514" iyz="-0.00000000301" izz="0.00001371513" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/visual/uts150cc.stl"/>
+      </geometry>
+      <origin xyz="0 0 0.27" rpy="${3.14159265359/2} 0 ${3.14159265359/2}"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/collision/uts150cc.stl"/>
+      </geometry>
+      <origin xyz="0 0 0.27" rpy="${3.14159265359/2} 0 ${3.14159265359/2}"/>
+    </collision>
+  </link>
+<!--
+Center of Mass is 0.0433911 0.0157576 0.0011992
+| 0.00000100727 -0.00000010964 -0.00000022481 |
+| -0.00000010964 0.00001453514 -0.00000000301 |
+| -0.00000022481 -0.00000000301 0.00001371513 |
+-->
+  <joint name="Yachse_fix" type="fixed">
+    <parent link="uts150cc"/>
+    <child link="adapter_table_to_uts150cc"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/> 		
+    <limit effort="0" velocity="0" lower="0" upper="0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <link name="adapter_table_to_uts150cc">
+    <inertial>
+      <mass value="2" />
+	<origin xyz="-0.0000026 0.0000017 -0.1943206" rpy="0.0 0.0 0.0"/>
+      <inertia ixx="0.00002034932" ixy="-0.00000000019" ixz="-0.00000000017" iyy="0.00001667426" iyz="0.00000000011" izz="0.00001776034" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/visual/adapter_table_to_uts150cc.stl"/>
+      </geometry>
+      <origin xyz="0 0 0.0" rpy=" 0 ${3.14159265359} 0"/>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/collision/adapter_table_to_uts150cc.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy=" 0 ${3.14159265359} 0"/>
+    </collision>
+  </link>
+<!--
+Center of Mass is -0.0000026 0.0000017 -0.1943206
+| 0.00002034932 -0.00000000019 -0.00000000017 |
+| -0.00000000019 0.00001667426 0.00000000011 |
+| -0.00000000017 0.00000000011 0.00001776034 |
+-->
+  <joint name="optical_table_fix" type="fixed">
+    <parent link="adapter_table_to_uts150cc"/>
+    <child link="optical_table"/>
+    <origin xyz="-0.1 -0.05 0.0" rpy="0 0 0"/> <!--xyz="-0.4 -0.225 0"/-->	
+    <limit effort="0" velocity="0" lower="0" upper="0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <link name="optical_table">
+    <inertial>
+      <mass value="200" />
+	<origin xyz="-0.0000913 -0.0017799 0.570549" rpy="0.0 0.0 0.0"/>
+      <inertia ixx="0.00936551270" ixy="-0.00000000093" ixz="0.00000021372" iyy="0.01651688232" iyz="-0.00009247907" izz="0.02397763916" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/visual/optical_table_top.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="${3.14159265359/2} 0 ${3.14159265359}"/>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/collision/optical_table_top.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="${3.14159265359/2} 0 ${3.14159265359}"/>
+    </collision>
+  </link>
+<!--
+Center of Mass is -0.0000913 -0.0017799 0.570549
+| 0.00936551270 -0.00000000093 0.00000021372 |
+| -0.00000000093 0.01651688232 -0.00009247907 |
+| 0.00000021372 -0.00009247907 0.02397763916 |
+-->
+  <joint name="ims300pp_fix" type="fixed">
+    <parent link="optical_table"/>
+    <child link="ims300pp"/>
+    <origin xyz="-0.3 -0.225 0.0" rpy="0 0 0"/> <!--xyz="0.4 0.225 0"/-->	
+    <limit effort="0" velocity="0" lower="0" upper="0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+
+  <link name="ims300pp">
+    <inertial>
+      <mass value="17" />
+	<origin xyz="0.0000137 0.0349893 -0.0755816" rpy="0.0 0.0 0.0"/>
+      <inertia ixx="0.00025458153" ixy="-0.00000000152" ixz="0.00000003262" iyy="0.00026897188" iyz="0.00000121938" izz="0.00002188012" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/visual/ims300pp.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy=" ${3.14159265359/2} 0 -${3.14159265359/2}"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/collision/ims300pp.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy=" ${3.14159265359/2} 0 -${3.14159265359/2}"/>
+    </collision>
+  </link>
+<!--
+Center of Mass is 0.0000137 0.0349893 -0.0755816
+| 0.00025458153 -0.00000000152 0.00000003262 |
+| -0.000152 0.00026897188 0.00000121938 |
+| 0.00000003262 0.00000121938 0.00002188012 |
+-->
+
+  <link name="eq180">
+    <inertial>
+      <mass value="10" />
+	<origin xyz="0.0220897 0.2415544 0.0000018" rpy="0.0 0.0 0.0"/>
+      <inertia ixx="0.00014322014" ixy="-0.00000825648" ixz="-0.00000000029" iyy="0.00002195410" iyz="0.00000000129" izz="0.00013556930" />
+    </inertial>
+
+    <visual>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/visual/eq180.stl"/>
+      </geometry>
+      <origin xyz="-0.03 0 0" rpy=" 0 0 0"/>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/collision/eq180.stl"/>
+      </geometry>
+      <origin xyz="-0.03 0 0" rpy=" 0 0 0"/>
+    </collision>
+  </link>
+<!--
+Center of Mass is 0.0220897 0.2415544 0.0000018
+| 0.00014322014 -0.00000825648 -0.00000000029 |
+| -0.00000825648 0.00002195410 0.00000000129 |
+| -0.00000000029 0.00000000129 0.00013556930 |
+-->
+  <joint name="horizontal_x" type="prismatic">
+    <parent link="ims300pp"/>
+    <child link="eq180"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0.009 0 0.077" rpy=" ${3.14159265359/2} 0 ${3.14159265359/2}"/>
+    <limit effort="10" velocity="0.1" lower="-0.15" upper="0.15"/>
+    <dynamics damping="0.7" friction="0.0"/>		
+  </joint>
+
+  <link name="ims300v">
+    <inertial>
+      <mass value="17" />
+	<origin xyz="-0.0000280 0.0292184 -0.1741412" rpy="0.0 0.0 0.0"/>
+      <inertia ixx="0.00030001408" ixy="0.00000000769" ixz="-0.00000000706" iyy="0.00031521254" iyz="-0.00000471805" izz="0.0001983247" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/visual/ims300v.stl"/>
+      </geometry>
+      <origin xyz="0.045 0.62 0" rpy="-${3.14159265359/2} -${3.14159265359/2} 0"/>
+      <material name="white"/>  
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/collision/ims300v.stl"/>
+      </geometry>
+      <origin xyz="0.045 0.62 0" rpy="-${3.14159265359/2} -${3.14159265359/2} 0"/>
+    </collision>
+  </link>
+<!--
+Center of Mass is -0.0000280 0.0292184 -0.1741412
+| 0.00030001408 0.00000000769 -0.00000000706 |
+| 0.00000000769 0.00031521254 -0.00000471805 |
+| -0.00000000706 -0.00000471805 0.00001983247 |
+-->
+  <joint name="fixed_vertical" type="fixed">
+    <parent link="eq180"/>
+    <child link="ims300v"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/> 		
+    <limit effort="0" velocity="0" lower="0" upper="0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <link name="adapter_ims300v_to_bgs80cc">
+   <inertial>
+      <mass value="0.9" />
+	<origin xyz="0.0039713 0.0278695 0.0001491" rpy="0.0 0.0 0.0"/>
+      <inertia ixx="0.00000598275" ixy="-0.00000067673" ixz="-0.00000000739" iyy="0.00000298925" iyz="-0.00000001071" izz="0.00000433954" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/visual/adapter_ims300v_to_bgs80cc.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="-${3.14159265359/2} 0 0"/>
+      <material name="green"/>
+    </visual>
+   <collision>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/collision/adapter_ims300v_to_bgs80cc.stl"/>
+      </geometry>
+      <!--<origin xyz="0 -0.0895 -0.16" rpy="${3.14159265359/2} 0 ${3.14159265359/2}"/>-->
+      <origin xyz="0 0 0" rpy="-${3.14159265359/2} 0 0"/>
+    </collision>
+  </link>
+<!--
+Center of Mass is 0.0039713 0.0278695 0.0001491
+| 0.00000598275 -0.00000067673 -0.00000000739 |
+| -0.00000067673 0.00000298925 -0.00000001071 |
+| -0.000739 -0.00000001071 0.00000433954 |
+-->
+  <joint name="vertical_z" type="prismatic">
+    <parent link="ims300v"/>
+    <child link="adapter_ims300v_to_bgs80cc"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0.1228 0.3615 0" rpy=" -${3.14159265359/2} 0 0"/>
+    <limit effort="10" velocity="0.1" lower="-0.15" upper="0.15"/>
+    <dynamics damping="0.8" friction="0.0"/>
+  </joint>
+  
+
+  <link name="bgs80cc">
+   <inertial>
+      <mass value="2.1" />
+	<origin xyz="0.0483037 -0.0776729 -0.0000207" rpy="0.0 0.0 0.0"/>
+      <inertia ixx="0.00000056433" ixy="0.00000002554" ixz="0.00000000244" iyy="0.00000397034" iyz="0.00000000006" izz="0.00000366163" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/visual/bgs80cc.stl"/>
+      </geometry>
+      <origin xyz="0.1007 0 0.01" rpy="${3.14159265359/2} 0 0"/>
+      <material name="blue"/>
+    </visual>
+   <collision>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/collision/bgs80cc.stl"/>
+      </geometry>
+      <origin xyz="0.1007 0 0.01" rpy="${3.14159265359/2} 0 0"/>
+    </collision>
+  </link>
+<!--
+Center of Mass is 0.0483037 -0.0776729 -0.0000207
+| 0.00000056433 0.00000002554 0.00000000244 |
+| 0.00000002554 0.00000397034 0.00000000006 |
+| 0.00000000244 0.00000000006 0.00000366163 |
+-->
+  <joint name="fix_go" type="fixed">
+    <parent link="adapter_ims300v_to_bgs80cc"/>
+    <child link="bgs80cc"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/> 		
+    <limit effort="0" velocity="0" lower="0" upper="0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+
+  <link name="measuring_system">
+   <inertial>
+      <mass value="1.5" />
+	<origin xyz="0.0180561 -0.0098927 -0.0546269" rpy="0.0 0.0 0.0"/>
+      <inertia ixx="0.00000147864" ixy="-0.00000007280" ixz="0.00000028363" iyy="0.00000166953" iyz="0.00000021929" izz="0.00000065700" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/visual/measuring_system.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+      <material name="blue"/>
+    </visual>
+   <collision>
+      <geometry>
+        <mesh filename="package://boroscope_support/meshes/collision/measuring_system_face.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+    </collision>
+  </link>
+<!--
+Center of Mass is 0.0180561 -0.0098927 -0.0546269
+| 0.00000147864 -0.00000007280 0.00000028363 |
+| -0.00000007280 0.00000166953 0.00000021929 |
+| 0.000000028363 0.00000021929 0.00000065700 |
+-->
+  <joint name="boro_theta" type="revolute">
+    <parent link="bgs80cc"/>
+    <child link="measuring_system"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0.1007 0 0.01" rpy="${3.14159265359/2} 0 0"/>
+    <limit effort="20" velocity="0.1" lower="-0.6" upper="0.6"/>
+    <dynamics damping="0.7" friction="0.0"/>
+  </joint>
+
+
+
+
+    </xacro:macro>
+</robot>

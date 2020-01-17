@@ -1,0 +1,1 @@
+controller_joint_names: ['blisk_rotate', 'horizontal_y', 'horizontal_x', 'vertical_z', 'boro_theta']
