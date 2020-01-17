@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+<xacro:include filename="$(find boroscope_support)/urdf/boroscope_macro.xacro"/>
+<xacro:macro name="boroscope_robot" params="prefix">
+
+  <!-- get URDF description of Staubli TX90 model -->
+  <xacro:boroscope prefix="${prefix}" />
+
+  <!-- transmission list -->
+  <transmission name="${prefix}tran1">
+    <robotNamespace>/${prefix}</robotNamespace>
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="horizontal_x">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}motor1">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="${prefix}tran2">
+    <robotNamespace>/${prefix}</robotNamespace>
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="horizontal_y">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}motor2">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="${prefix}tran3">
+    <robotNamespace>/${prefix}</robotNamespace>
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="vertical_z">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}motor3">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="${prefix}tran4">
+    <robotNamespace>/${prefix}</robotNamespace>
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="boro_theta">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}motor4">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="${prefix}tran5">
+    <robotNamespace>/${prefix}</robotNamespace>
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="blisk_rotate">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}motor5">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <!-- end of transmission list -->
+
+  <!-- Gazebo-specific link properties -->
+  <gazebo reference="base_link">
+    <material>Gazebo/Yellow</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="test_object">
+    <material>Gazebo/Yellow</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="urs150bcc">
+    <material>Gazebo/Yellow</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>  
+  <gazebo reference="adapter_uts150cc_to_urs150bcc">
+    <material>Gazebo/Yellow</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="uts150cc">
+    <material>Gazebo/Yellow</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="adapter_table_to_uts150cc">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="optical_table">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="ims300pp">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="eq180">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="ims300v">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="adapter_ims300v_to_bgs80cc">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="bgs80cc">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="measuring_system">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+
+  <!-- ros_control plugin -->
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/${prefix}</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo>  
+
+  </xacro:macro>
+</robot>

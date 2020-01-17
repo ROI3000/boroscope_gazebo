@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+<xacro:include filename="$(find boroscope_support)/urdf/boroscope_macro.xacro"/>
+  <xacro:macro name="boroscope_robot" params="prefix">
+
+  <!-- get URDF description of Staubli TX90 model -->
+  <xacro:boroscope prefix="${prefix}" />
+
+<!-- solve fixed-joint problem in gazebo -->
+
+  <!--gazebo reference="base_fixed">
+    <disableFixedJointLumping>true</disableFixedJointLumping> 
+    <preserveFixedJoint>true</preserveFixedJoint>
+  </gazebo-->
+
+  <!--gazebo reference="adapter_uts150cc_to_urs150bcc_fix">
+    <disableFixedJointLumping>true</disableFixedJointLumping> 
+    <preserveFixedJoint>true</preserveFixedJoint>
+  </gazebo>
+
+  <gazebo reference="yachse_fix">
+    <disableFixedJointLumping>true</disableFixedJointLumping> 
+    <preserveFixedJoint>true</preserveFixedJoint>
+  </gazebo>
+
+  <gazebo reference="optical_table_fix">
+    <disableFixedJointLumping>true</disableFixedJointLumping> 
+    <preserveFixedJoint>true</preserveFixedJoint>
+  </gazebo>
+
+  <gazebo reference="ims300pp_fix">
+    <disableFixedJointLumping>true</disableFixedJointLumping> 
+    <preserveFixedJoint>true</preserveFixedJoint>
+  </gazebo>
+
+  <gazebo reference="fixed_vertical">
+    <disableFixedJointLumping>true</disableFixedJointLumping> 
+    <preserveFixedJoint>true</preserveFixedJoint>
+  </gazebo>
+
+  <gazebo reference="fix_go">
+    <disableFixedJointLumping>true</disableFixedJointLumping> 
+    <preserveFixedJoint>true</preserveFixedJoint>
+  </gazebo-->
+
+  <!-- transmission list -->
+
+  <transmission name="${prefix}tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="horizontal_x">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}motor1">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </actuator>
+  </transmission>
+
+  <transmission name="${prefix}tran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="horizontal_y">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}motor2">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </actuator>
+  </transmission>
+
+  <transmission name="${prefix}tran3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="vertical_z">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}motor3">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </actuator>
+  </transmission>
+
+  <transmission name="${prefix}tran4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="boro_theta">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}motor4">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </actuator>
+  </transmission>
+
+  <transmission name="${prefix}tran5">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="blisk_rotate">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}motor5">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </actuator>
+  </transmission>
+  <!-- end of transmission list -->
+
+  <!-- Gazebo-specific link properties -->
+  <gazebo reference="base_link">
+    <material>Gazebo/Yellow</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="test_object">
+    <material>Gazebo/Yellow</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="urs150bcc">
+    <material>Gazebo/Yellow</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>  
+  <gazebo reference="adapter_uts150cc_to_urs150bcc">
+    <material>Gazebo/Yellow</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="uts150cc">
+    <material>Gazebo/Yellow</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="adapter_table_to_uts150cc">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="optical_table">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="ims300pp">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="eq180">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="ims300v">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="adapter_ims300v_to_bgs80cc">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="bgs80cc">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+  <gazebo reference="measuring_system">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+
+  <!-- ros_control plugin -->
+  <gazebo>
+    <static>false</static>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/</robotNamespace>
+      <robotParam>robot_description</robotParam>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>true</legacyModeNS>
+    </plugin>
+  </gazebo>   
+
+  </xacro:macro>
+</robot>

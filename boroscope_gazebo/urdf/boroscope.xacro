@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<robot name="" xmlns:xacro="http://wiki.ros.org/xacro">
+  <!-- TX90 -->
+  <xacro:include filename="$(find boroscope_gazebo)/urdf/boroscope_macro.xacro"/>	
+  
+  <xacro:boroscope_robot prefix=""/>
+
+  <!-- Fix robot to Gazebo world -->
+
+  <link name="world"/>
+
+  <joint name="world-base_link-fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+
+</robot>
